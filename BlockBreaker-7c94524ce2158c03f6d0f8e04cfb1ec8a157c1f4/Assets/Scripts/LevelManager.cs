@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
 	{
 		Debug.Log ("Level Load requested for " + name);
 		Application.LoadLevel (name);
+		Brick.breakableCount = 0;
 	}
 		
 
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour
 	public void LoadNextLevel ()
 	{
 		Application.LoadLevel (Application.loadedLevel + 1);
+		Brick.breakableCount = 0;
 	}
 	
 	public void BrickDestroyed ()

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Brick : MonoBehaviour
 {
+	public GameObject smoke;
 	public AudioClip crack;
 	private int timesHit;
 	private LevelManager levelManager;
@@ -24,7 +25,7 @@ public class Brick : MonoBehaviour
 	
 	void OnCollisionEnter2D (Collision2D collision)
 	{
-		AudioSource.PlayClipAtPoint (crack, transform.position);
+		//AudioSource.PlayClipAtPoint (crack, transform.position);
 		if (isBreakable) {
 			HandleHits ();
 		}
@@ -37,7 +38,11 @@ public class Brick : MonoBehaviour
 		print (timesHit);
 		if (timesHit >= maxHits) {
 			breakableCount--;
+			print (breakableCount);
 			levelManager.BrickDestroyed ();
+			//The smoke code for some reason does not work -> should generate smoke on destroy of color of brick
+			GameObject smokePuff = Instantiate (smoke, transform.position, Quaternion.identity) as GameObject;
+			smokePuff.particleSystem.startColor = gameObject.GetComponent<SpriteRenderer> ().color;
 			Destroy (gameObject);
 		} else {
 			LoadSprites ();
